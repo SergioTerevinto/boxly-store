@@ -5,20 +5,9 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { useEffect, useState } from 'react';
 import { NavLink } from "react-router";
 
-function NavbarPrincipal() {
-    const [categories, setCategories] = useState([]);
-    
-    useEffect(() => {
-        fetch('https://dummyjson.com/products/category-list')
-        .then(res => res.json())
-        .then(data => {
-            setCategories(data);
-        });
-    }, []);
-  
+function NavBar() {
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container fluid>
@@ -28,14 +17,42 @@ function NavbarPrincipal() {
                     <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                         <Nav.Link as={NavLink} to="/">Home</Nav.Link>
                         <NavDropdown title="Categorías" id="navbarScrollingDropdown">
-                            {categories.map((category, index) => (
-                                <NavDropdown.Item 
-                                key={index} 
-                                to={`/category/ ${category}`} 
-                                as={NavLink}>
-                                    {category}
-                                </NavDropdown.Item>
-                            ))}
+                        <NavDropdown.Item 
+                                to="/"
+                                as={NavLink}
+                                >
+                                Todos los productos
+                            </NavDropdown.Item>
+                            <NavDropdown.Item 
+                                to="/category/Soportes"
+                                as={NavLink}
+                                >
+                                Soportes
+                            </NavDropdown.Item>
+                            <NavDropdown.Item 
+                                to="/category/Papeles"
+                                as={NavLink}
+                                >
+                                Papeles
+                            </NavDropdown.Item>
+                            <NavDropdown.Item 
+                                to="/category/RollosTermicos"
+                                as={NavLink}
+                                >
+                                Rollos Térmicos
+                            </NavDropdown.Item>
+                            <NavDropdown.Item 
+                                to="/category/Bolsas"
+                                as={NavLink}
+                                >
+                                Bolsas
+                            </NavDropdown.Item>
+                            <NavDropdown.Item 
+                                to="/category/Bandejas"
+                                as={NavLink}
+                                >
+                                Bandejas
+                            </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Form className="d-flex">
@@ -54,4 +71,4 @@ function NavbarPrincipal() {
     );
 }
 
-export default NavbarPrincipal;
+export default NavBar;
