@@ -1,25 +1,28 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router';
+import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
+import styles from './Item.module.css'; 
+function Item({ item }) {
+  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+    addToCart(item, 1);
+  };
 
-function Item ({item}) {
   return (
-    <Col md={6} lg={3} sm={12}>
-        <Card className='mb-4'>
-            <Card.Img variant="top" src={item.image} />
-            <Card.Body>
-                <Card.Title>{item.name}</Card.Title>
-                <Card.Text>{item.category}</Card.Text>
-                <Card.Text>{item.description}</Card.Text>
-                <Button 
-                variant="primary"
-                as={Link}
-                to={`/product/${item.id}`}
-                >Ver mas</Button>
-            </Card.Body>
-        </Card>
-  </Col>
+    <div className={styles.card}>
+      <img src={item.image} alt={item.name} className={styles.image} />
+      <h3>{item.name}</h3>
+      <p>{item.description}</p>
+      <p>${item.price}</p>
+      <div className={styles.buttons}>
+       
+        <button onClick={handleAddToCart}>Comprar</button>
+
+       
+        <Link to={`/product/${item.id}`}>
+          <button>Ver más</button>
+        </Link>
+      </div>
+    </div>
   );
 }
 

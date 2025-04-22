@@ -1,26 +1,21 @@
 import { FaShoppingCart } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 function CartWidget() {
-    const notificationCount = 2;
+    const { cartQuantity } = useCart();
 
     return (
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-            <FaShoppingCart size={30} />
-            {notificationCount > 0 && (
-                <span style={{
-                    position: 'absolute',
-                    top: '-5px',
-                    right: '-5px',
-                    backgroundColor: 'red',
-                    color: 'white',
-                    borderRadius: '50%',
-                    padding: '5px',
-                    fontSize: '12px',
-                }}>
-                    {notificationCount}
-                </span>
-            )}
-        </div>
+        <Link to="/cart" style={{ textDecoration: 'none' }}>
+            <div className="cart-widget-container">
+                <FaShoppingCart size={30} color="white" />
+                {cartQuantity > 0 && (
+                    <span className="cart-widget-bubble" style={{ backgroundColor: 'red', color: 'white' }}>
+                        {cartQuantity}
+                    </span>
+                )}
+            </div>
+        </Link>
     );
 }
 

@@ -1,29 +1,31 @@
-import { useState, useEffect } from "react"
-import ItemList from "./ItemList"
-import { useParams } from "react-router"
-import { getItems, filterByCategory } from "../firebase/db"
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { getItems, filterByCategory } from "../firebase/db";
+import Item from "./Item";
+import styles from './ItemListContainer.module.css';
 
+function ItemListContainer() {
+  const [items, setItems] = useState([]);
+  const { id } = useParams();
 
-function ItemListContainer({ text }) {
-    const [items, setItems] = useState([])
-    const {id} = useParams()
+  useEffect(() => {
+    if (!id) {
+      getItems().then(setItems);
+    } else {
+      filterByCategory(id).then(setItems);
+    }
+  }, [id]);
 
-    useEffect(() => {
-        if (id) {
-            filterByCategory(id)
-                .then(data => setItems(data))
-        } else {
-        getItems ()
-            .then(data => setItems(data)) 
-        }
-    }, [id])
-
-return (
-    <div>
-        <h1>{text}</h1>
-        <ItemList items={items} />
+  return (
+    <div className={styles.container}>
+      <h1 className={styles.title}>TODOS LOS PRODUCTOS</h1>
+      <div className={styles.grid}>
+        {items.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </div>
     </div>
-);
+  );
 }
 
-export default ItemListContainer
+export default ItemListContainer;
